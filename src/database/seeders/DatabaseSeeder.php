@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Parameter;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,5 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Parameter::factory(10)->create();
     }
 }
