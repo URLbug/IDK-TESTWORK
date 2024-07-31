@@ -11,9 +11,14 @@
     
     @if(isset($images) && $images !== [null])
         @foreach ($images as $image)
-            <img src="{{ '/images/' . $image->title }}">
+            @if($image->type == 2)
+                <img src="{{ '/images/' . $image->title['image_gray'] }}">
+                <p>title: {{ $image->title['image_gray'] }} || id: {{ $image->id }} || type: {{ $image->type }}</p>
+            @endif
 
-            <p>title: {{ $image->title }} || id: {{ $image->id }} || type: {{ $image->type }}</p>
+            <img src="{{ '/images/' . $image->title['image'] }}">
+
+            <p>title: {{ $image->title['image'] }} || id: {{ $image->id }} || type: {{ $image->type }}</p>
 
             <br>
             <br>

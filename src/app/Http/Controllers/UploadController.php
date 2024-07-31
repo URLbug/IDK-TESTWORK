@@ -71,7 +71,7 @@ class UploadController extends Controller
             $name_image_gray = $this->normalizeImage(
                 $image_gray->getClientOriginalName(), 
                 $image_gray->getClientOriginalExtension(),
-            ) . '-gray';
+            );
 
             $image_gray->move(public_path() . '/images/', $name_image_gray);
 
@@ -88,16 +88,12 @@ class UploadController extends Controller
 
     private function saveData(array $images): bool
     {
-        $isLoad = [];
 
-        foreach($images as $key => $image)
-        {
-            $isLoad[] = Parameter::insert([
-                'title' => $image,
-                'type' => count($images),
-            ]);
-        }
+        $isLoad = Parameter::insert([
+            'title' => json_encode($images),
+            'type' => count($images),
+        ]);
 
-        return (bool)array_product($isLoad);
+        return $isLoad;
     }
 }

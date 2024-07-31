@@ -14,4 +14,8 @@ class Parameter extends Model
         'title',
         'type',
     ];
+
+    protected $casts = [
+        'title' => 'array'
+    ];
 }
