@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Parameter;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +20,14 @@ class UploadController extends Controller
                 return back()->withErrors('Ошибка: изображение не было загружено!');
             }
 
-            $this->saveImage($request);
+            $images = $this->saveImage($request);
+
+            $isLoad = $this->saveData($images);
+            
+            if(!$isLoad)
+            {
+                return back()->withErrors('Ошибка: изображение не было загружено!');
+            }
 
             return back()
             ->with('success', 'Изображение успешно загружена');
@@ -47,26 +55,50 @@ class UploadController extends Controller
         return str_slug($name) . '.' . $extension;
     }
 
-    private function saveImage(Request $request)
+    private function saveImage(Request $request): array
     {
         $image = $request->file('image');
         $image_gray = $request->file('image-gray');
 
-        $name = $this->normalizeImage(
+        $name_image = $this->normalizeImage(
             $image->getClientOriginalName(), 
             $image->getClientOriginalExtension(),
         );
 
-        $image->move(public_path() . '/images/', $name);
+        $image->move(public_path() . '/images/', $name_image);
 
         if(isset($image_gray))
         {
-            $name = $this->normalizeImage(
+            $name_image_gray = $this->normalizeImage(
                 $image_gray->getClientOriginalName(), 
                 $image_gray->getClientOriginalExtension(),
             );
 
-            $image_gray->move(public_path() . '/images/', $name);
+            $image_gray->move(public_path() . '/images/', $name_image_gray);
+
+            return [
+                'image' => $name_image,
+                'image_gray' => $name_image_gray,
+            ];
         }
+
+        return [
+            'image' => $name_image,
+        ];
+    }
+
+    private function saveData(array $images): bool
+    {
+        $isLoad = [];
+
+        foreach($images as $key => $image)
+        {
+            $isLoad[] = Parameter::insert([
+                'title' => $image,
+                'type' => count($images),
+            ]);
+        }
+
+        return (bool)array_product($isLoad);
     }
 }
