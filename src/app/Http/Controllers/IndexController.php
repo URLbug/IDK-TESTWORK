@@ -28,7 +28,8 @@ class IndexController extends Controller
             else
             {
                 $params = Parameter::query()
-                ->where('title', 'like', $data . '%')
+                ->where('title->image', 'like', $data . '%', 'or')
+                ->where('title->image_gray', 'like', $data . '%')
                 ->first();
             }
 

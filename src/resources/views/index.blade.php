@@ -4,7 +4,7 @@
     <form action="{{ route('home') }}" method="POST">
         @csrf
 
-        <input type="text" name="search" id="search" class="search" placeholder="Поиск" required>
+        <input type="text" name="search" id="search" class="search" placeholder="Поиск">
         <input type="submit" value="Поиск">
     </form>
     <br>
