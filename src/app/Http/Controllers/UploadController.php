@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
@@ -23,7 +22,7 @@ class UploadController extends Controller
             $images = $this->saveImage($request);
 
             $isLoad = $this->saveData($images);
-            
+
             if(!$isLoad)
             {
                 return back()->withErrors('Ошибка: изображение не было загружено!');
@@ -72,7 +71,7 @@ class UploadController extends Controller
             $name_image_gray = $this->normalizeImage(
                 $image_gray->getClientOriginalName(), 
                 $image_gray->getClientOriginalExtension(),
-            );
+            ) . '-gray';
 
             $image_gray->move(public_path() . '/images/', $name_image_gray);
 
