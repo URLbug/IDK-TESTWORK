@@ -9,6 +9,8 @@ class Parameter extends Model
 {
     use HasFactory;
 
+    public $timestamps = true;
+
     protected $fillable = [
         'id',
         'title',

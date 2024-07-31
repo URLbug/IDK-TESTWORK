@@ -15,4 +15,7 @@ Route::namespace('App\\Http\\Controllers')
         '/upload', 
         'UploadController@index'
     )->name('upload');
+
+    Route::get('/api/v1/images', 'ApiController@index')
+    ->name('api');
 });
