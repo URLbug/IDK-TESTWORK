@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Parameter;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
@@ -15,7 +14,6 @@ class ApiController extends Controller
             'title', 
             'type',
         ]);
-
     
         $params = $params->map(function($image){
             $getDomain = substr(

@@ -10,6 +10,11 @@ Route::namespace('App\\Http\\Controllers')
         'IndexController@index'
     )->name('home');
 
+    Route::post(
+        '/update',
+        'IndexController@update'
+    )->name('update');
+
     Route::match(
         ['get', 'post'],
         '/upload', 

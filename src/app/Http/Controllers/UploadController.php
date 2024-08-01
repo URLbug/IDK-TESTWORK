@@ -35,7 +35,7 @@ class UploadController extends Controller
         return view('upload');
     }
 
-    private function isImage(Request $request): bool
+    protected function isImage(Request $request): bool
     {
         $validator = Validator::make(
         $request->only(['image', 'image-gray',]),
@@ -47,14 +47,14 @@ class UploadController extends Controller
         return $validator->fails();
     }
 
-    private function normalizeImage(string $name, string $extension): string
+    protected function normalizeImage(string $name, string $extension): string
     {
         $name = pathinfo($name, PATHINFO_FILENAME) . '-' . now() . '-' . random_int(10000, 99999);
 
         return str_slug($name) . '.' . $extension;
     }
 
-    private function saveImage(Request $request): array
+    protected function saveImage(Request $request): array
     {
         $image = $request->file('image');
         $image_gray = $request->file('image-gray');
@@ -86,7 +86,7 @@ class UploadController extends Controller
         ];
     }
 
-    private function saveData(array $images): bool
+    protected function saveData(array $images): bool
     {
 
         $isLoad = Parameter::insert([
